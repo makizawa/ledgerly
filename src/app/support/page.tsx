@@ -13,13 +13,13 @@ export default function Support() {
       {/* FAQダミー */}
       <div className="grid md:grid-cols-2 gap-8">
         <div className="rounded-xl border bg-white p-6 space-y-2">
-          <div className="font-medium">Q. 契約更新は自動ですか？</div>
+          <div className="font-medium"><p className="text-slate-900">Q. 契約更新は自動ですか？</p></div>
           <div className="text-sm text-gray-600">
             契約条件に応じて自動更新／手動更新を設定できます。
           </div>
         </div>
         <div className="rounded-xl border bg-white p-6 space-y-2">
-          <div className="font-medium">Q. 請求書はどこで確認できますか？</div>
+          <div className="font-medium"><p className="text-slate-900">Q. 請求書はどこで確認できますか？</p></div>
           <div className="text-sm text-gray-600">
             管理画面の「請求管理」から確認可能です。
           </div>

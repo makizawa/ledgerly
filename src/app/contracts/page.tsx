@@ -6,10 +6,10 @@ export default function Contracts() {
         <table className="w-full border rounded-xl overflow-hidden">
           <thead className="bg-gray-100 text-left">
             <tr>
-              <th className="p-3">契約名</th>
-              <th className="p-3">取引先</th>
-              <th className="p-3">期間</th>
-              <th className="p-3">更新</th>
+              <th className="p-3"><p className="text-slate-900">契約名</p></th>
+              <th className="p-3"><p className="text-slate-900">取引先</p></th>
+              <th className="p-3"><p className="text-slate-900">期間</p></th>
+              <th className="p-3"><p className="text-slate-900">更新</p></th>
             </tr>
           </thead>
           <tbody>

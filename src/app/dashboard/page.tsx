@@ -1,6 +1,6 @@
 export default function Dashboard() {
     return (
-      <main className="p-10">
+        <section className="mx-auto max-w-7xl px-6 py-20 space-y-12">
         <h1 className="text-3xl font-bold mb-6">ダッシュボード</h1>
   
         <div className="grid grid-cols-3 gap-6">
@@ -15,7 +15,7 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-      </main>
+      </section>
     );
   }
   

@@ -23,10 +23,10 @@ export default function Home() {
 
         <div className="rounded-2xl border bg-white p-8 shadow-sm">
           <ul className="space-y-4 text-sm">
-            <li>・契約ステータス管理</li>
-            <li>・請求履歴 / 支払状況の可視化</li>
-            <li>・更新期限アラート</li>
-            <li>・社内共有用の管理画面</li>
+            <li><p className="text-gray-700">・契約ステータス管理</p></li>
+            <li><p className="text-gray-700">・請求履歴 / 支払状況の可視化</p></li>
+            <li><p className="text-gray-700">・更新期限アラート</p></li>
+            <li><p className="text-gray-700">・社内共有用の管理画面</p></li>
           </ul>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function Home() {
             key={f.title}
             className="rounded-xl border bg-white p-6 space-y-2"
           >
-            <h3 className="font-semibold">{f.title}</h3>
+            <h3 className="font-semibold text-gray-700">{f.title}</h3>
             <p className="text-sm text-gray-600">{f.desc}</p>
           </div>
         ))}

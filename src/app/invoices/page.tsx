@@ -1,6 +1,6 @@
 export default function Invoices() {
     return (
-      <main className="p-10">
+      <section className="mx-auto max-w-7xl px-6 py-20 space-y-12">
         <h1 className="text-3xl font-bold mb-6">請求管理</h1>
   
         <ul className="space-y-4">
@@ -20,7 +20,7 @@ export default function Invoices() {
             </li>
           ))}
         </ul>
-      </main>
+      </section>
     );
   }
   

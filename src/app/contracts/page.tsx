@@ -1,6 +1,6 @@
 export default function Contracts() {
     return (
-      <main className="p-10">
+        <section className="mx-auto max-w-7xl px-6 py-20 space-y-12">
         <h1 className="text-3xl font-bold mb-6">契約管理</h1>
   
         <table className="w-full border rounded-xl overflow-hidden">
@@ -25,7 +25,7 @@ export default function Contracts() {
             ))}
           </tbody>
         </table>
-      </main>
+      </section>
     );
   }
   

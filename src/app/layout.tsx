@@ -17,7 +17,7 @@ export default function RootLayout({
 
         <Footer />
 
-        {/* Dify Chat Embed */}
+        {/* Dify Chatbot */}
         <DifyEmbed />
       </body>
     </html>

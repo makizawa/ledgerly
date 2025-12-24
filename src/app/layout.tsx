@@ -1,7 +1,7 @@
 import "./globals.css";
 import Header from "./components/Header";
 import { Footer } from "./components/Footer";
-
+import DifyEmbed from "./components/DifyEmbed";
 
 export default function RootLayout({
   children,
@@ -16,6 +16,9 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
 
         <Footer />
+
+        {/* Dify Chat Embed */}
+        <DifyEmbed />
       </body>
     </html>
   );

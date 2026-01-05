@@ -36,7 +36,7 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Graph */}
+      {/* Billing chart */}
       <div className="rounded-2xl border p-6">
         <div className="text-sm text-gray-500 mb-4">
           月別請求額の推移
@@ -47,11 +47,15 @@ export default function Dashboard() {
             <LineChart data={billingData}>
               <XAxis dataKey="month" />
               <YAxis
-                tickFormatter={(v) => `¥${(v / 1_000_000).toFixed(1)}M`}
+                tickFormatter={(v) =>
+                  `¥${(v / 1_000_000).toFixed(1)}M`
+                }
               />
               <Tooltip
-                formatter={(v: number) =>
-                  `¥${v.toLocaleString()}`
+                formatter={(value) =>
+                  typeof value === "number"
+                    ? `¥${value.toLocaleString()}`
+                    : value
                 }
               />
               <Line

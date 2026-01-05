@@ -9,12 +9,11 @@ const DIFY_EMBED_SRC = `${DIFY_BASE_URL}/embed.min.js`;
 export default function DifyEmbed() {
   const [open, setOpen] = useState(false);
 
-  // Dify embed を1回だけ初期化
   useEffect(() => {
-    // 既に読み込み済みなら何もしない
-    if (document.getElementById("dify-embed-script")) return;
+    // すでに読み込まれていれば何もしない
+    if (document.getElementById(DIFY_TOKEN)) return;
 
-    // config をwindowに設定（Difyが参照）
+    // ① Dify が参照する config を先に定義
     (window as any).difyChatbotConfig = {
       token: DIFY_TOKEN,
       baseUrl: DIFY_BASE_URL,
@@ -23,32 +22,28 @@ export default function DifyEmbed() {
       userVariables: {},
     };
 
-    // embed script を追加
-    const s = document.createElement("script");
-    s.id = "dify-embed-script";
-    s.src = DIFY_EMBED_SRC;
-    s.defer = true;
+    // ② embed script を同期で読み込む（重要）
+    const script = document.createElement("script");
+    script.id = DIFY_TOKEN; // ★ Dify必須
+    script.src = DIFY_EMBED_SRC;
+    script.async = false;
 
-    // Dify仕様: scriptタグのidをtokenにしている例が多いので合わせる（安全）
-    // ※ 既存のDify埋め込みコードと同様の形
-    s.setAttribute("data-dify-token", DIFY_TOKEN);
+    document.body.appendChild(script);
 
-    document.body.appendChild(s);
-
-    // 生成されたDOMを監視して、デフォルトボタン非表示＆ウィンドウの見た目を整える
+    // ③ DOM生成を待って調整
     const observer = new MutationObserver(() => {
       const bubbleBtn = document.getElementById("dify-chatbot-bubble-button");
       const bubbleWin = document.getElementById("dify-chatbot-bubble-window");
 
-      // デフォルトの右下バブルボタンは消す（あなたのボタンを使う）
+      // デフォルトのバブルボタンは非表示
       if (bubbleBtn) {
         bubbleBtn.style.display = "none";
       }
 
-      // 生成ウィンドウを「あなたのパネルっぽく」寄せる（位置/サイズ/角丸など）
+      // ウィンドウの見た目を調整
       if (bubbleWin) {
         bubbleWin.style.right = "24px";
-        bubbleWin.style.bottom = "88px"; // ボタンの上
+        bubbleWin.style.bottom = "88px";
         bubbleWin.style.width = "380px";
         bubbleWin.style.height = "600px";
         bubbleWin.style.borderRadius = "16px";
@@ -56,65 +51,64 @@ export default function DifyEmbed() {
         bubbleWin.style.boxShadow = "0 16px 40px rgba(0,0,0,0.2)";
         bubbleWin.style.border = "1px solid rgba(0,0,0,0.12)";
         bubbleWin.style.zIndex = "10000";
+        bubbleWin.style.display = "none"; // 初期は閉じる
       }
 
-      // 両方揃ったら監視は軽く止める（無駄に監視し続けない）
       if (bubbleBtn && bubbleWin) observer.disconnect();
     });
 
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
 
     return () => observer.disconnect();
   }, []);
 
-  // open に応じて Dify のウィンドウを表示/非表示
+  // open state に応じて表示制御
   useEffect(() => {
     const bubbleWin = document.getElementById("dify-chatbot-bubble-window");
     if (!bubbleWin) return;
-
     bubbleWin.style.display = open ? "block" : "none";
   }, [open]);
 
   return (
-    <>
-      {/* 自前のチャットボタン（アイコン） */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label="サポートチャット"
-        style={{
-          position: "fixed",
-          right: 24,
-          bottom: 24,
-          width: 56,
-          height: 56,
-          borderRadius: "50%",
-          backgroundColor: "#111827",
-          color: "white",
-          border: "2px solid white",
-          boxSizing: "border-box",
-          cursor: "pointer",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
-          zIndex: 10000,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+    <button
+      onClick={() => setOpen(v => !v)}
+      aria-label="サポートチャット"
+      style={{
+        position: "fixed",
+        right: 24,
+        bottom: 24,
+        width: 56,
+        height: 56,
+        borderRadius: "50%",
+        backgroundColor: "#111827",
+        color: "white",
+        border: "2px solid white",
+        boxSizing: "border-box",
+        cursor: "pointer",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+        zIndex: 10000,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* 吹き出しアイコン */}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
-        {/* 吹き出しアイコン（SVG） */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
-        </svg>
-      </button>
-    </>
+        <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+      </svg>
+    </button>
   );
 }
